@@ -1,8 +1,16 @@
 FROM php:7.4-cli-alpine3.12
 
-RUN apk add --no-cache git openssh libpng libpng-dev && \
-    docker-php-ext-install gd && \
-    apk del libpng-dev
+RUN apk add --no-cache git openssh libpng libpng-dev libpng-dev libjpeg-turbo libjpeg-turbo-dev && \
+    docker-php-ext-configure gd \
+    --with-gd \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir
+
+RUN apk add --no-cache \
+    libpng-dev \
+    libjpeg-turbo \
+    libjpeg-turbo-dev 
 
 RUN mkdir ~/.ssh/ && \
     touch ~/.ssh/id_rsa \
@@ -13,6 +21,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
+
+ENV PATH "/composer/vendor/bin:$PATH"
+
+RUN composer global require hirak/prestissimo
 
 RUN composer global require phpunit/phpunit
 
