@@ -1,16 +1,7 @@
 FROM php:7.4-cli-alpine3.12
 
 RUN apk add --no-cache git openssh libpng libpng-dev libpng-dev libjpeg-turbo libjpeg-turbo-dev && \
-    docker-php-ext-configure gd \
-    --with-gd \
-    --with-jpeg-dir \
-    --with-png-dir \
-    --with-zlib-dir
-
-RUN apk add --no-cache \
-    libpng-dev \
-    libjpeg-turbo \
-    libjpeg-turbo-dev 
+    docker-php-ext-configure gd
 
 RUN mkdir ~/.ssh/ && \
     touch ~/.ssh/id_rsa \
