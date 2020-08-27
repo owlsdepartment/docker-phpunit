@@ -5,7 +5,7 @@ RUN apk add --no-cache git openssh libzip libzip-dev libpng libpng-dev libjpeg-t
     docker-php-ext-install gd
 
 RUN mkdir ~/.ssh/ && \
-    touch ~/.ssh/id_rsa \
+    touch ~/.ssh/id_rsa && \
     chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
