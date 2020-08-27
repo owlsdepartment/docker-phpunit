@@ -1,7 +1,8 @@
 FROM php:7.4-cli-alpine3.12
 
-RUN apk add --no-cache git openssh libpng libpng-dev libpng-dev libjpeg-turbo libjpeg-turbo-dev && \
-    docker-php-ext-configure gd
+RUN apk add --no-cache git openssh libzip libzip-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev && \
+    docker-php-ext-configure gd && \
+    docker-php-ext-install gd && \
 
 RUN mkdir ~/.ssh/ && \
     touch ~/.ssh/id_rsa \
