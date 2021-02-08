@@ -1,8 +1,8 @@
 FROM php:7.4-cli-alpine3.12
 
-RUN apk add --no-cache git openssh libzip libzip-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev && \
+RUN apk add --no-cache git openssh libzip libzip-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev php7-pdo_sqlite && \
     docker-php-ext-configure gd --with-jpeg && \
-    docker-php-ext-install gd pdo pdo_mysql pdo_sqlite
+    docker-php-ext-install gd pdo pdo_mysql
 
 RUN mkdir ~/.ssh/ && \
     touch ~/.ssh/id_rsa && \
