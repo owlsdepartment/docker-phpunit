@@ -1,18 +1,10 @@
-FROM php:7.4-cli-alpine3.12
+FROM owlsdepartment/php-fpm-alpine:latest
 
-RUN apk add --no-cache git openssh libzip libzip-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev php7-pdo_sqlite && \
-    docker-php-ext-configure gd --with-jpeg && \
-    docker-php-ext-install gd pdo pdo_mysql
+## SqlLite
+RUN docker-php-ext-install pdo_sqlite \
+    && docker-php-ext-enable pdo_sqlite
 
-RUN mkdir ~/.ssh/ && \
-    touch ~/.ssh/id_rsa && \
-    chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+## OpenSshClient
+RUN apk add --no-cache git openssh-client
 
-RUN apk add --no-cache composer
-
-ENV PATH "/composer/vendor/bin:$PATH"
-
-RUN composer global require hirak/prestissimo
-
-RUN composer global require phpunit/phpunit
-
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --version=1.10.16 --filename=composer
