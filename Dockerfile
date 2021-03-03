@@ -1,8 +1,8 @@
 FROM owlsdepartment/php-fpm-alpine:latest
 
-## SqlLite
-RUN docker-php-ext-install pdo_sqlite \
-    && docker-php-ext-enable pdo_sqlite
+## Prepare config
+RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+RUN echo "display_errors = On" >> $PHP_INI_DIR/php.ini
 
 ## OpenSshClient
 RUN apk add --no-cache git openssh-client
